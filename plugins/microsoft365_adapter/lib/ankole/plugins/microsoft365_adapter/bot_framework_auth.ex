@@ -88,6 +88,8 @@ defmodule Ankole.Plugins.Microsoft365Adapter.BotFrameworkAuth do
     end
   end
 
+  # botframework sends the serviceUrl claim in lowercase, so both the claim and the
+  # activity serviceUrl are case-normalized (and trailing-slash trimmed) before comparing.
   defp verify_service_url(claims, activity) do
     claimed = MapHelpers.optional_text(claims, "serviceUrl")
     activity_service_url = MapHelpers.optional_text(activity, "serviceUrl")
@@ -100,5 +102,5 @@ defmodule Ankole.Plugins.Microsoft365Adapter.BotFrameworkAuth do
   end
 
   defp normalize_url(nil), do: nil
-  defp normalize_url(url), do: String.trim_trailing(url, "/")
+  defp normalize_url(url), do: url |> String.downcase() |> String.trim_trailing("/")
 end
