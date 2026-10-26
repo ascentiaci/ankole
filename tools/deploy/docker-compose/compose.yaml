@@ -64,11 +64,8 @@ services:
       - backend
 
   migrate:
-    # image: ${ANKOLE_CONTROL_PLANE_IMAGE:-ghcr.io/agentbull/ankole-agent-control-plane:2.0.0-alpha.5}
-    build:
-      dockerfile: ../../../app/control_plane/Dockerfile
-      context: ../../../.
-    pull_policy: always
+    image: ankole-control:local
+    pull_policy: never
     restart: "no"
     command:
       - /app/bin/migrate
@@ -101,11 +98,8 @@ services:
     logging: *default-logging
 
   control-plane:
-    # image: ${ANKOLE_CONTROL_PLANE_IMAGE:-ghcr.io/agentbull/ankole-agent-control-plane:2.0.0-alpha.5}
-    build:
-      dockerfile: ../../../app/control_plane/Dockerfile
-      context: ../../../.
-    pull_policy: always
+    image: ankole-control:local
+    pull_policy: never
     restart: unless-stopped
     environment: *control-plane-environment
     # The control plane runs as user ankole; this group gives it the Docker
