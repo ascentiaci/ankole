@@ -65,7 +65,9 @@ services:
 
   migrate:
     # image: ${ANKOLE_CONTROL_PLANE_IMAGE:-ghcr.io/agentbull/ankole-agent-control-plane:2.0.0-alpha.5}
-    build: ../../../app/control_plane/.
+    build:
+      dockerfile: ../../../app/control_plane/Dockerfile
+      context: ../../../.
     pull_policy: always
     restart: "no"
     command:
@@ -100,7 +102,9 @@ services:
 
   control-plane:
     # image: ${ANKOLE_CONTROL_PLANE_IMAGE:-ghcr.io/agentbull/ankole-agent-control-plane:2.0.0-alpha.5}
-    build: ../../../app/control_plane/.
+    build:
+      dockerfile: ../../../app/control_plane/Dockerfile
+      context: ../../../.
     pull_policy: always
     restart: unless-stopped
     environment: *control-plane-environment
